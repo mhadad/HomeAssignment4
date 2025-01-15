@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "HomeAssignment4"
 include(":app")
- 
+include(":app:benchmark")
