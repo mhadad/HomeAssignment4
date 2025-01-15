@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AlertDialog
@@ -31,6 +33,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun DetailsView(resultViewModel: SearchResultModel, onDismiss: ()-> Unit, isDialogOpen: Boolean) {
     if(isDialogOpen) {
+        val columnScrollState = rememberScrollState()
         val publishedDate = resultViewModel.published.orEmpty()
         var formattedPublishedDate = ""
         if (publishedDate.isNotEmpty()) {
@@ -40,7 +43,7 @@ fun DetailsView(resultViewModel: SearchResultModel, onDismiss: ()-> Unit, isDial
         }
         BasicAlertDialog(onDismissRequest = { onDismiss }, properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true, )) {
             Card(shape = RoundedCornerShape(20.dp), modifier = Modifier.fillMaxWidth(1.0f)) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.verticalScroll(columnScrollState)) {
                     AsyncImage(
                         model = resultViewModel.media.m.orEmpty(),
                         contentDescription = resultViewModel.description.orEmpty(),
